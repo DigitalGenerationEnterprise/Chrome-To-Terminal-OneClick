@@ -1,0 +1,1 @@
+Installer path note: package installers should resolve files relative to their own directory, not the parent directory.
