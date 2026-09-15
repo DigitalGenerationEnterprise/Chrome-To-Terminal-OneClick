@@ -1,0 +1,1 @@
+The Linux installer must resolve the bundled linux directory relative to the installer's own directory.
