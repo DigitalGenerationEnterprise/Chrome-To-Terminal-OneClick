@@ -1,10 +1,51 @@
 # Release testing
 
-## v1.0.1
+## Package layout
 
-The GitHub Actions release workflow builds the native connector from `connectors/go`, packages the Chrome extension, and publishes Linux, Windows, and macOS connector downloads to the GitHub Release.
+Each connector archive must be self-contained. The installer must resolve files relative to the installer itself, not its parent directory.
 
-### Customer flow
+### Linux
+
+```text
+Run-Anywhere-Linux-Connector-X.Y.Z/
+├── install.sh
+└── linux/
+    └── run-anywhere-host
+```
+
+Run from the extracted connector directory with:
+
+```bash
+chmod +x install.sh
+./install.sh
+```
+
+Do not require `sudo` for the per-user Chrome Native Messaging installation.
+
+### macOS
+
+```text
+Run-Anywhere-macOS-Connector-X.Y.Z/
+├── install.sh
+└── macos/
+    ├── run-anywhere-host-intel
+    └── run-anywhere-host-arm64
+```
+
+The installer selects the correct binary from the package's own `macos/` directory.
+
+### Windows
+
+```text
+Run-Anywhere-Windows-Connector-X.Y.Z/
+├── install.ps1
+└── windows/
+    └── run-anywhere-host.exe
+```
+
+The installer selects the executable from the package's own `windows/` directory.
+
+## Customer flow
 
 1. Install **Run Anywhere** from the Chrome Web Store.
 2. Install the small connector for the operating system once.
