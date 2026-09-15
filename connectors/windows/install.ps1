@@ -12,7 +12,7 @@ $Json = @"
   "description":"Run Anywhere native terminal connector",
   "path":"$ManifestPath",
   "type":"stdio",
-  "allowed_origins":["chrome-extension://pmkcmghjfmigbokmlpleiohnidpikpii/"]
+  "allowed_origins":["chrome-extension://pmkcmghjfmigbokmlpleiohnidpikpi/"]
 }
 "@
 $Json | Set-Content -Encoding UTF8 $Manifest
