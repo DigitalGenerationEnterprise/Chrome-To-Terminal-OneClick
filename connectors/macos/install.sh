@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+ROOT="$(cd "$(dirname "$0")" && pwd)"
 HOST_DIR="$HOME/Library/Application Support/Run Anywhere"
 MANIFEST_DIR="$HOME/Library/Application Support/Google/Chrome/NativeMessagingHosts"
 mkdir -p "$HOST_DIR" "$MANIFEST_DIR"
@@ -13,7 +13,7 @@ cat > "$MANIFEST_DIR/com.digitalgenerationz.runanywhere.json" <<JSON
   "description":"Run Anywhere native terminal connector",
   "path":"$HOST_DIR/run-anywhere-host",
   "type":"stdio",
-  "allowed_origins":["chrome-extension://pmkcmghjfmigbokmlpleiohnidpikpii/"]
+  "allowed_origins":["chrome-extension://pmkcmghjfmigbokmlpleiohnidpikpi/"]
 }
 JSON
 echo "Run Anywhere native connector installed for Google Chrome."
