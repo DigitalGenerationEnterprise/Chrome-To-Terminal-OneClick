@@ -12,7 +12,7 @@ cat > "$MANIFEST_DIR/com.digitalgenerationz.runanywhere.json" <<JSON
   "description":"Run Anywhere native terminal connector",
   "path":"$HOST_DIR/run-anywhere-host",
   "type":"stdio",
-  "allowed_origins":["chrome-extension://plkdaddppeijjnnhpgmfpbdenhbhakhm/"]
+  "allowed_origins":["chrome-extension://pmkcmghjfmigbokmlpleiohnidpikpii/"]
 }
 JSON
 echo "Run Anywhere native connector installed for Google Chrome."
