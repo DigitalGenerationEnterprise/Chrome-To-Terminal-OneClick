@@ -1,4 +1,4 @@
-name: Build and Release Run Anywhere
+name: Build and Release Chrome-to-Terminal
 
 on:
   push:
@@ -64,7 +64,7 @@ jobs:
       - name: Package extension
         run: |
           mkdir -p release
-          (cd extension && zip -r "../release/Run-Anywhere-Chrome-Web-Store-${GITHUB_REF_NAME#v}.zip" .)
+          (cd extension && zip -r "../release/Chrome-to-Terminal-Chrome-Web-Store-${GITHUB_REF_NAME#v}.zip" .)
 
       - name: Package Linux connector
         run: |
@@ -73,14 +73,14 @@ jobs:
           chmod 755 linux-package/linux/run-anywhere-host
           cp connectors/linux/install.sh linux-package/install.sh
           chmod 755 linux-package/install.sh
-          tar -czf "release/Run-Anywhere-Linux-Connector-${GITHUB_REF_NAME#v}.tar.gz" -C linux-package .
+          tar -czf "release/Chrome-to-Terminal-Linux-Connector-${GITHUB_REF_NAME#v}.tar.gz" -C linux-package .
 
       - name: Package Windows connector
         run: |
           mkdir -p win-package/windows
           cp dist/run-anywhere-host-windows.exe win-package/windows/run-anywhere-host.exe
           cp connectors/windows/install.ps1 win-package/install.ps1
-          (cd win-package && zip -r "../release/Run-Anywhere-Windows-Connector-${GITHUB_REF_NAME#v}.zip" .)
+          (cd win-package && zip -r "../release/Chrome-to-Terminal-Windows-Connector-${GITHUB_REF_NAME#v}.zip" .)
 
       - name: Package macOS connector
         run: |
@@ -89,11 +89,11 @@ jobs:
           cp dist/run-anywhere-host-macos-arm64 mac-package/macos/run-anywhere-host-arm64
           cp connectors/macos/install.sh mac-package/install.sh
           chmod 755 mac-package/install.sh mac-package/macos/*
-          tar -czf "release/Run-Anywhere-macOS-Connector-${GITHUB_REF_NAME#v}.tar.gz" -C mac-package .
+          tar -czf "release/Chrome-to-Terminal-macOS-Connector-${GITHUB_REF_NAME#v}.tar.gz" -C mac-package .
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          name: Run Anywhere ${{ github.ref_name }}
+          name: Chrome-to-Terminal ${{ github.ref_name }}
           generate_release_notes: true
           files: release/*
