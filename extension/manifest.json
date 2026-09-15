@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Chrome-to-Terminal",
   "short_name": "Chrome-to-Terminal",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Run selected commands from web pages directly in your terminal, Command Prompt, or PowerShell.",
   "minimum_chrome_version": "120",
   "permissions": ["activeTab", "contextMenus", "nativeMessaging", "storage", "scripting"],
