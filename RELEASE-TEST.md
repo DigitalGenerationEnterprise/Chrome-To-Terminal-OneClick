@@ -1,0 +1,1 @@
+Release installation must use paths relative to the installer package directory.
