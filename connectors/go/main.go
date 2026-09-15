@@ -13,9 +13,9 @@ import (
 )
 
 type Request struct {
-	Action    string `json:"action"`
+	Action   string `json:"action"`
 	Command  string `json:"command"`
-	Shell     string `json:"shell"`
+	Shell    string `json:"shell"`
 	SourceURL string `json:"sourceUrl"`
 }
 
@@ -79,20 +79,18 @@ func quoteSingle(s string) string {
 
 func linux(c, s string) error {
 	p := shellPath(s, "/bin/bash")
-	if s == "auto" {
-		if exists("zsh") {
-			p = "/bin/zsh"
-		}
+	if s == "auto" && exists("zsh") {
+		p = "/bin/zsh"
 	}
 
-	// Keep one persistent Run Anywhere shell session so every right-click
-	// command shares the same history, output and working directory.
+	// Keep one persistent Chrome-to-Terminal shell session so repeated
+	// commands share the same history, output and working directory.
 	if exists("tmux") {
 		return linuxTmux(c, p)
 	}
 
-	// Fallback for systems without tmux: keep the terminal open at a prompt,
-	// but commands will use separate terminal windows instead of one shared session.
+	// Fallback without tmux: keep the terminal open at a prompt, but each
+	// right-click run uses a separate terminal window.
 	script := c + "; exec " + quoteSingle(p)
 	terms := [][]string{}
 	if exists("konsole") {
@@ -116,17 +114,14 @@ func linux(c, s string) error {
 }
 
 func linuxTmux(command, shell string) error {
-	const session = "run-anywhere"
+	const session = "chrome-to-terminal"
 
-	// Create the persistent shell session if it does not already exist.
 	if err := exec.Command("tmux", "has-session", "-t", session).Run(); err != nil {
 		if err := exec.Command("tmux", "new-session", "-d", "-s", session, shell).Run(); err != nil {
-			return fmt.Errorf("could not create Run Anywhere terminal session: %w", err)
+			return fmt.Errorf("could not create Chrome-to-Terminal terminal session: %w", err)
 		}
 	}
 
-	// If no terminal client is currently attached, open one and attach to the
-	// existing session. Closing the terminal leaves the tmux session alive.
 	clients := exec.Command("tmux", "list-clients", "-t", session)
 	if out, err := clients.Output(); err != nil || len(bytes.TrimSpace(out)) == 0 {
 		if err := launchTerminalAttached(session); err != nil {
@@ -134,13 +129,11 @@ func linuxTmux(command, shell string) error {
 		}
 	}
 
-	// Send literally, then send Enter separately so commands beginning with '-'
-	// are not interpreted as tmux options.
 	if err := exec.Command("tmux", "send-keys", "-t", session, "-l", command).Run(); err != nil {
-		return fmt.Errorf("could not send command to Run Anywhere terminal: %w", err)
+		return fmt.Errorf("could not send command to Chrome-to-Terminal terminal: %w", err)
 	}
 	if err := exec.Command("tmux", "send-keys", "-t", session, "Enter").Run(); err != nil {
-		return fmt.Errorf("could not submit command to Run Anywhere terminal: %w", err)
+		return fmt.Errorf("could not submit command to Chrome-to-Terminal terminal: %w", err)
 	}
 	return nil
 }
@@ -166,7 +159,7 @@ func launchTerminalAttached(session string) error {
 			return nil
 		}
 	}
-	return fmt.Errorf("could not open a supported terminal for the persistent Run Anywhere session")
+	return fmt.Errorf("could not open a supported terminal for the persistent Chrome-to-Terminal session")
 }
 
 func mac(c, s string) error {
