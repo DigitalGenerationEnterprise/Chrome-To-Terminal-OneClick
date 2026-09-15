@@ -1,12 +1,12 @@
-# Privacy Policy — Run Anywhere
+# Privacy Policy — Chrome-to-Terminal
 
-**Effective date:** 15 September 2026
+**Effective date:** 16 September 2026
 
-Run Anywhere is a browser extension from Digital Generationz that lets users send selected webpage text to a locally installed terminal connector.
+Chrome-to-Terminal is a browser extension from Digital Generationz that lets users send selected webpage text to a locally installed terminal connector.
 
 ## Data handling
 
-Run Anywhere does not send selected commands or webpage content to a Digital Generationz server. Selected text is passed from the Chrome extension to the user's locally installed native connector using Chrome Native Messaging.
+Chrome-to-Terminal does not send selected commands or webpage content to a Digital Generationz server. Selected text is passed from the Chrome extension to the user's locally installed native connector using Chrome Native Messaging.
 
 The extension does not require an account and does not intentionally collect names, email addresses, browsing history, page contents, or analytics data.
 
@@ -14,7 +14,7 @@ The extension may use Chrome's local/sync storage only to remember the user's se
 
 ## Third-party services
 
-Run Anywhere does not intentionally transmit user data to third-party analytics, advertising, tracking, or remote execution services.
+Chrome-to-Terminal does not intentionally transmit user data to third-party analytics, advertising, tracking, or remote execution services.
 
 ## Security
 
