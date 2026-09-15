@@ -9,5 +9,6 @@
   "background": {"service_worker": "service-worker.js", "type": "module"},
   "action": {"default_title": "Run Anywhere", "default_popup": "popup.html"},
   "icons": {"16":"icons/icon16.png","32":"icons/icon32.png","48":"icons/icon48.png","128":"icons/icon128.png"},
-  "options_page": "options.html"
+  "options_page": "options.html",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArFTOjiyxVan0QLC3VrtoPEEMHRgKAek6ivaE3ebwuEDwZMAKbcIk/clw5stP1JSnEC4PaXTpGVkfqgSUKCXWbtmW4yLreqiS9/uFuFvu2DySkYyUG52DOQMXWLqtH0XUNDdj6ItodPYkpYyCuzf2Iu/Fz3vxfiZmGVBC8nq9CCaA13/LHrKHZB6wgZDzGUAxSHqg35krudBCMTEA1PXazPE+53rpK4y5lJcofurxrE/x8IZSUrFbdLM8Hqut0RctKSHm9qfcc/4GFqFKxTN43TivGjyBw/BzUe1rpplb3Ex063dTkZ5chhVhl08OU+2Hfh6OzhoWvmSiFRYQbdgDgwIDAQAB"
 }
