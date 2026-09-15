@@ -9,12 +9,9 @@ on:
 permissions:
   contents: write
 
-env:
-  VERSION: ${{ github.ref_name }}
-
 jobs:
   build:
-    name: Build connectors and extension
+    name: Build connectors
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -32,15 +29,11 @@ jobs:
             goos: darwin
             goarch: arm64
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Go
-        uses: actions/setup-go@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
         with:
           go-version: '1.24'
-
-      - name: Build native host
+      - name: Build
         shell: bash
         env:
           GOOS: ${{ matrix.goos }}
@@ -50,81 +43,56 @@ jobs:
           ext=""
           if [ "$GOOS" = "windows" ]; then ext=".exe"; fi
           go build -trimpath -ldflags="-s -w" -o "dist/run-anywhere-host-${{ matrix.os }}${ext}" ./connectors/go
-
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: native-${{ matrix.os }}
           path: dist/run-anywhere-host-${{ matrix.os }}*
 
   package:
-    name: Package release files
+    name: Package and publish
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Download Linux
-        uses: actions/download-artifact@v4
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
         with:
-          name: native-linux
           path: dist
-
-      - name: Download Windows
-        uses: actions/download-artifact@v4
-        with:
-          name: native-windows
-          path: dist
-
-      - name: Download macOS Intel
-        uses: actions/download-artifact@v4
-        with:
-          name: native-macos-intel
-          path: dist
-
-      - name: Download macOS ARM64
-        uses: actions/download-artifact@v4
-        with:
-          name: native-macos-arm64
-          path: dist
+          pattern: native-*
+          merge-multiple: true
 
       - name: Package extension
         run: |
           mkdir -p release
-          cd extension
-          zip -r ../release/Run-Anywhere-Chrome-Web-Store-${GITHUB_REF_NAME#v}.zip .
-          cd ..
+          (cd extension && zip -r "../release/Run-Anywhere-Chrome-Web-Store-${GITHUB_REF_NAME#v}.zip" .)
 
       - name: Package Linux connector
         run: |
-          mkdir -p linux-package/usr/local/bin linux-package/etc/opt/chrome/native-messaging-hosts
-          cp dist/run-anywhere-host-linux linux-package/usr/local/bin/run-anywhere-host
-          chmod 755 linux-package/usr/local/bin/run-anywhere-host
+          mkdir -p linux-package/linux
+          cp dist/run-anywhere-host-linux linux-package/linux/run-anywhere-host
+          chmod 755 linux-package/linux/run-anywhere-host
           cp connectors/linux/install.sh linux-package/install.sh
           chmod 755 linux-package/install.sh
-          tar -czf release/Run-Anywhere-Linux-Connector-${GITHUB_REF_NAME#v}.tar.gz -C linux-package .
+          tar -czf "release/Run-Anywhere-Linux-Connector-${GITHUB_REF_NAME#v}.tar.gz" -C linux-package .
 
       - name: Package Windows connector
         run: |
-          mkdir -p win-package
-          cp dist/run-anywhere-host-windows.exe win-package/run-anywhere-host.exe
+          mkdir -p win-package/windows
+          cp dist/run-anywhere-host-windows.exe win-package/windows/run-anywhere-host.exe
           cp connectors/windows/install.ps1 win-package/install.ps1
-          (cd win-package && zip -r ../release/Run-Anywhere-Windows-Connector-${GITHUB_REF_NAME#v}.zip .)
+          (cd win-package && zip -r "../release/Run-Anywhere-Windows-Connector-${GITHUB_REF_NAME#v}.zip" .)
 
       - name: Package macOS connector
         run: |
-          mkdir -p mac-package
-          cp dist/run-anywhere-host-macos-intel mac-package/run-anywhere-host-intel
-          cp dist/run-anywhere-host-macos-arm64 mac-package/run-anywhere-host-arm64
+          mkdir -p mac-package/macos
+          cp dist/run-anywhere-host-macos-intel mac-package/macos/run-anywhere-host-intel
+          cp dist/run-anywhere-host-macos-arm64 mac-package/macos/run-anywhere-host-arm64
           cp connectors/macos/install.sh mac-package/install.sh
-          chmod 755 mac-package/*
-          tar -czf release/Run-Anywhere-macOS-Connector-${GITHUB_REF_NAME#v}.tar.gz -C mac-package .
+          chmod 755 mac-package/install.sh mac-package/macos/*
+          tar -czf "release/Run-Anywhere-macOS-Connector-${GITHUB_REF_NAME#v}.tar.gz" -C mac-package .
 
-      - name: Create release
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}
           name: Run Anywhere ${{ github.ref_name }}
           generate_release_notes: true
           files: release/*
