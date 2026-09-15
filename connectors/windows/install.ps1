@@ -1,9 +1,9 @@
 $ErrorActionPreference = "Stop"
 $Root = Split-Path -Parent $PSScriptRoot
-$HostDir = Join-Path $env:LOCALAPPDATA "Run Anywhere"
+$HostDir = Join-Path $env:LOCALAPPDATA "Chrome-to-Terminal"
 New-Item -ItemType Directory -Force -Path $HostDir | Out-Null
 $Target = Join-Path $HostDir "run-anywhere-host.exe"
-Copy-Item (Join-Path $Root "windows\run-anywhere-host.exe") $Target -Force
+Copy-Item (Join-Path $PSScriptRoot "windows\run-anywhere-host.exe") $Target -Force
 $Manifest = Join-Path $HostDir "com.digitalgenerationz.runanywhere.json"
 $ManifestPath = $Target.Replace('\','\\')
 $Json = @"
