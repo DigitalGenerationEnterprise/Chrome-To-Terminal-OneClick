@@ -1,1 +1,63 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chrome-to-Terminal — Settings</title><link rel="stylesheet" href="options.css"></head><body><div class="wrap"><header><div class="mark">▶</div><div><h1>Chrome-to-Terminal</h1><p>Web → Terminal</p></div></header><section><h2>Terminal</h2><label>Preferred shell</label><select id="shell"><option value="auto">Auto-detect</option><option value="bash">Bash / Zsh</option><option value="powershell">PowerShell</option><option value="cmd">Command Prompt</option></select><p class="muted">Auto-detect uses Bash/Zsh on macOS and Linux and PowerShell on Windows.</p></section><section><h2>Native connector</h2><p>This extension uses Chrome Native Messaging to launch the operating system terminal. Install the small Chrome-to-Terminal connector for your platform.</p><p class="muted">The browser extension does not upload your selected command to a Chrome-to-Terminal server. It sends the selected text to the locally installed connector.</p></section><section><h2>Linux persistent terminal</h2><p>On Linux, installing <code>tmux</code> enables one persistent Chrome-to-Terminal session, keeping previous commands, output and working directory available for later runs.</p></section><section><h2>Safety</h2><p>Commands execute with your normal operating-system user permissions. Only run commands you understand and trust.</p></section></div><script src="options.js"></script></body></html>
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Chrome-to-Terminal — Settings</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="mark">▶</div>
+      <div>
+        <h1>Chrome-to-Terminal</h1>
+        <p>Web → Terminal</p>
+      </div>
+    </header>
+
+    <section>
+      <h2>Terminal</h2>
+      <label for="shell">Preferred shell</label>
+      <select id="shell">
+        <option value="auto">Auto-detect</option>
+        <option value="bash">Bash / Zsh</option>
+        <option value="powershell">PowerShell</option>
+        <option value="cmd">Command Prompt</option>
+      </select>
+      <p class="muted">Auto-detect uses Bash/Zsh on macOS and Linux and PowerShell on Windows.</p>
+    </section>
+
+    <section>
+      <h2>Native connector</h2>
+      <p>This extension uses Chrome Native Messaging to launch the operating system terminal. Install the small Chrome-to-Terminal connector for your platform.</p>
+      <p class="muted">The browser extension does not upload your selected command to a Chrome-to-Terminal server. It sends the selected text to the locally installed connector.</p>
+      <a class="button" href="https://github.com/DigitalGenerationEnterprise/Chrome-To-Terminal-OneClick/releases/latest" target="_blank" rel="noopener noreferrer">Download Latest Connector from GitHub</a>
+      <p class="hint">The link always opens the current <strong>latest GitHub release</strong>, where you can choose the Linux, macOS or Windows connector for your computer.</p>
+    </section>
+
+    <section>
+      <h2>Linux persistent terminal</h2>
+      <p>On Linux, installing <code>tmux</code> enables one persistent Chrome-to-Terminal session, keeping previous commands, output and working directory available for later runs.</p>
+    </section>
+
+    <section>
+      <h2>Safety</h2>
+      <p>Commands execute with your normal operating-system user permissions. Only run commands you understand and trust.</p>
+    </section>
+
+    <footer>
+      <div class="brandline">Digital Generationz Enterprise</div>
+      <div>Created by <strong>Anthony Blomfield &amp; Team DigitalGenerationz</strong></div>
+      <div class="links">
+        <a href="https://digitalgenerationz.com" target="_blank" rel="noopener noreferrer">DigitalGenerationz.com</a>
+        <span>·</span>
+        <a href="https://myspark.social" target="_blank" rel="noopener noreferrer">mySPARK.social</a>
+        <span>·</span>
+        <a href="https://github.com/DigitalGenerationEnterprise/Chrome-To-Terminal-OneClick" target="_blank" rel="noopener noreferrer">GitHub Project</a>
+      </div>
+    </footer>
+  </div>
+  <script src="options.js"></script>
+</body>
+</html>
